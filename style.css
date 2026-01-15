@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #0a0a0a;
+    --fg: #c9c9c9;
+    --fg-dim: #666;
+    --accent: #e0e0e0;
+    --link: #7af;
+}
+
+[data-theme="light"] {
+    --bg: #f5f5f0;
+    --fg: #2a2a2a;
+    --fg-dim: #888;
+    --accent: #1a1a1a;
+    --link: #4a8ad4;
+}
+
+body {
+    font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', 'Monaco', monospace;
+    background-color: var(--bg);
+    color: var(--fg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    line-height: 1.6;
+}
+
+main {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+pre {
+    font-family: inherit;
+    font-size: 14px;
+    white-space: pre;
+}
+
+.name {
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.section {
+    color: var(--fg-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.85em;
+}
+
+.highlight {
+    color: var(--accent);
+}
+
+a {
+    color: var(--link);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+a:hover {
+    opacity: 0.7;
+    text-decoration: underline;
+}
+
+footer {
+    margin-top: 2rem;
+    color: var(--fg-dim);
+    font-size: 12px;
+}
+
+/* Subtle scanline effect for that retro feel */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    z-index: 1000;
+    opacity: 0.3;
+}
+
+/* Hide scanlines in light mode */
+[data-theme="light"] body::before {
+    display: none;
+}
+
+/* Theme toggle */
+.theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1001;
+}
+
+.theme-toggle select {
+    font-family: inherit;
+    font-size: 12px;
+    background: var(--bg);
+    color: var(--fg);
+    border: 1px solid var(--fg-dim);
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.theme-toggle select:hover {
+    border-color: var(--accent);
+}
+
+.theme-toggle select:focus {
+    outline: none;
+    border-color: var(--link);
+}
+
+@media (max-width: 700px) {
+    pre {
+        font-size: 10px;
+    }
+    
+    body {
+        padding: 1rem;
+    }
+}

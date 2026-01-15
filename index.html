@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Erlun Lian - Software Engineer">
+    <title>Erlun Lian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <pre>
+┌─────────────────────────────────────────────────────────────┐
+│                                                             │
+│  <span class="section">Erlun Lian</span>                                                 | 
+│                                                             │
+│  Engineer                                                   │
+│                                                             │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  <span class="section">About</span>                                                      │
+│                                                             │
+│  Vibe (mostly) coding and shipping                          │
+│                                                             │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  <span class="section">Experience</span>                                                 │
+│                                                             │
+│  <span class="highlight">Founding Engineer</span> — AI Startup              2025 - now     │
+│  Working on something new.                                  │
+│                                                             │
+│  <span class="highlight">Senior Engineer</span> — <a href="https://rippling.com" target="_blank">Rippling</a>                  2021 - 2025    │
+│  Finance platform & products.                               │
+│                                                             │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  <span class="section">Interests</span>                                                  │
+│                                                             │
+│  • Industrial & hardware design                             │
+│  • Automation                                               │
+│                                                             │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  <span class="section">Links</span>                                                      │
+│                                                             │
+│  <a href="https://linkedin.com/in/erlunlian" target="_blank">linkedin.com/in/erlunlian</a>                                  │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+        </pre>
+    </main>
+    <footer>
+        <p>last updated: 2025</p>
+    </footer>
+    <div class="theme-toggle">
+        <select id="theme-select" aria-label="Select theme">
+            <option value="system">system</option>
+            <option value="light">light</option>
+            <option value="dark">dark</option>
+        </select>
+    </div>
+
+    <script>
+        const themeSelect = document.getElementById('theme-select');
+        const html = document.documentElement;
+        
+        function getSystemTheme() {
+            return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+        
+        function applyTheme(theme) {
+            if (theme === 'system') {
+                const systemTheme = getSystemTheme();
+                html.setAttribute('data-theme', systemTheme);
+            } else {
+                html.setAttribute('data-theme', theme);
+            }
+        }
+        
+        function loadSavedTheme() {
+            const saved = localStorage.getItem('theme') || 'system';
+            themeSelect.value = saved;
+            applyTheme(saved);
+        }
+        
+        themeSelect.addEventListener('change', (e) => {
+            const theme = e.target.value;
+            localStorage.setItem('theme', theme);
+            applyTheme(theme);
+        });
+        
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+            if (themeSelect.value === 'system') {
+                applyTheme('system');
+            }
+        });
+        
+        loadSavedTheme();
+    </script>
+</body>
+</html>
