@@ -30,10 +30,10 @@
 │  <span class="section">Experience</span>                                                 │
 │                                                             │
 │  <span class="highlight">Founding Engineer</span> — AI Startup              2025 - now     │
-│  Working on something new.                                  │
+│  Working on something new                                   │
 │                                                             │
 │  <span class="highlight">Senior Engineer</span> — <a href="https://rippling.com" target="_blank">Rippling</a>                  2021 - 2025    │
-│  Finance platform & products.                               │
+│  Finance platform & products                                │
 │                                                             │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
@@ -54,20 +54,21 @@
     <footer>
         <p>last updated: Jan 2026</p>
     </footer>
-    <div class="theme-toggle">
-        <select id="theme-select" aria-label="Select theme">
-            <option value="system">system</option>
-            <option value="light">light</option>
-            <option value="dark">dark</option>
-        </select>
+    <div class="theme-toggle" role="group" aria-label="Theme switcher">
+        <span class="theme-toggle__pill theme-toggle__pill--instant" aria-hidden="true"></span>
+        <button type="button" class="theme-toggle__button" data-theme-option="system" aria-pressed="false">system</button>
+        <button type="button" class="theme-toggle__button" data-theme-option="light" aria-pressed="false">light</button>
+        <button type="button" class="theme-toggle__button" data-theme-option="dark" aria-pressed="false">dark</button>
     </div>
 
     <script>
-        const themeSelect = document.getElementById('theme-select');
         const html = document.documentElement;
+        const themeButtons = document.querySelectorAll('[data-theme-option]');
+        const themePill = document.querySelector('.theme-toggle__pill');
+        const themeMedia = window.matchMedia('(prefers-color-scheme: light)');
         
         function getSystemTheme() {
-            return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+            return themeMedia.matches ? 'light' : 'dark';
         }
         
         function applyTheme(theme) {
@@ -78,24 +79,58 @@
                 html.setAttribute('data-theme', theme);
             }
         }
+
+        function setActiveThemeButton(theme) {
+            themeButtons.forEach((button) => {
+                const isActive = button.dataset.themeOption === theme;
+                button.classList.toggle('is-active', isActive);
+                button.setAttribute('aria-pressed', String(isActive));
+            });
+
+            updateThemePill(theme);
+        }
+
+        function updateThemePill(theme) {
+            const activeButton = document.querySelector(`[data-theme-option="${theme}"]`);
+
+            if (!activeButton || !themePill) {
+                return;
+            }
+
+            themePill.style.width = `${activeButton.offsetWidth}px`;
+            themePill.style.transform = `translateX(${activeButton.offsetLeft}px)`;
+        }
         
         function loadSavedTheme() {
             const saved = localStorage.getItem('theme') || 'system';
-            themeSelect.value = saved;
+            setActiveThemeButton(saved);
             applyTheme(saved);
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    themePill.classList.remove('theme-toggle__pill--instant');
+                });
+            });
         }
         
-        themeSelect.addEventListener('change', (e) => {
-            const theme = e.target.value;
-            localStorage.setItem('theme', theme);
-            applyTheme(theme);
+        themeButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const theme = button.dataset.themeOption;
+                localStorage.setItem('theme', theme);
+                setActiveThemeButton(theme);
+                applyTheme(theme);
+            });
         });
         
         // Listen for system theme changes
-        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
-            if (themeSelect.value === 'system') {
+        themeMedia.addEventListener('change', () => {
+            if (localStorage.getItem('theme') === 'system' || !localStorage.getItem('theme')) {
                 applyTheme('system');
             }
+        });
+
+        window.addEventListener('resize', () => {
+            const saved = localStorage.getItem('theme') || 'system';
+            updateThemePill(saved);
         });
         
         loadSavedTheme();
