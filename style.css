@@ -39,6 +39,7 @@ body {
     justify-content: center;
     padding: 2rem;
     line-height: 1.6;
+    transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 main {
@@ -62,16 +63,18 @@ pre {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-size: 0.85em;
+    transition: color 0.35s ease;
 }
 
 .highlight {
     color: var(--accent);
+    transition: color 0.35s ease;
 }
 
 a {
     color: var(--link);
     text-decoration: none;
-    transition: opacity 0.2s ease;
+    transition: color 0.35s ease, opacity 0.2s ease;
 }
 
 a:hover {
@@ -83,6 +86,7 @@ footer {
     margin-top: 2rem;
     color: var(--fg-dim);
     font-size: 12px;
+    transition: color 0.35s ease;
 }
 
 /* Subtle scanline effect for that retro feel */
@@ -103,11 +107,12 @@ body::before {
     );
     z-index: 1000;
     opacity: 0.3;
+    transition: opacity 0.35s ease;
 }
 
 /* Hide scanlines in light mode */
 [data-theme="light"] body::before {
-    display: none;
+    opacity: 0;
 }
 
 /* Theme toggle */
@@ -123,6 +128,7 @@ body::before {
     background: var(--panel-inner);
     border: 1px solid var(--panel-border);
     overflow: hidden;
+    transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .theme-toggle__pill {
@@ -133,7 +139,7 @@ body::before {
     border-radius: 999px;
     background: var(--accent);
     box-shadow: 0 6px 18px var(--panel-shadow);
-    transition: transform 0.24s ease, width 0.24s ease;
+    transition: transform 0.24s ease, width 0.24s ease, background-color 0.35s ease, box-shadow 0.35s ease;
     will-change: transform, width;
 }
 
@@ -153,7 +159,7 @@ body::before {
     border-radius: 999px;
     padding: 0.55rem 0.8rem;
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+    transition: color 0.35s ease, opacity 0.2s ease;
     opacity: 0.72;
 }
 
