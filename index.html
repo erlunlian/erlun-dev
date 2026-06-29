@@ -280,7 +280,15 @@
             .name { font-size: 1.35rem; }
             .entry__head { flex-direction: column; gap: 0.1rem; }
             .titlebar__label { margin-right: 1.6rem; }
-            .theme-toggle { top: 0.75rem; right: 0.75rem; }
+            /* In normal flow below the card so it never overlaps on narrow screens.
+               Keep position: relative (not static) so the sliding pill, which is
+               absolutely positioned, still anchors to the toggle. */
+            .theme-toggle {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 1.5rem auto 0;
+            }
             .theme-toggle__button { padding: 0.55rem 0.45rem; font-size: 11px; }
         }
 
